@@ -41,11 +41,16 @@ public class WordComparer {
                 String[] parsedLine = inputParser(line);
                 for (String word : parsedLine) {
                     int lineNumberTemp = TextParse.readerAndWriter(dictionary, word);
-                    String[] spanishWords = spanishParser(lineNumberTemp);
-                    for(String spanishWord : spanishWords){
-                        System.out.print(spanishWord + ", ");
+                    if(lineNumberTemp == -1){
+                        System.out.println("Invalid English Word");
                     }
-                    System.out.println();
+                    else {
+                        String[] spanishWords = spanishParser(lineNumberTemp);
+                        for(String spanishWord : spanishWords){
+                            System.out.print(spanishWord + ", ");
+                        }
+                        System.out.println();
+                    }
                 }
             }
         }
