@@ -6,37 +6,24 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class TextParse {
-    private final String inputFileName = "src/input.txt";
 
-    private Scanner questionScanner;
-    {
+    public static void readerAndWriter(final String inputFileName, final String compareString){
+        Scanner questionScanner;
+        int lineNumber = 1;
         try {
             questionScanner = new Scanner(new File(inputFileName));
+            String line = "";
+            do{
+                line = questionScanner.nextLine();
+                System.out.println(line + " at line " + lineNumber);
+                ++lineNumber;
+            }while(!line.equals("End Of File"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
-        new TextParse();
-    }
-
-    private TextParse(){
-
-        init();
-
-        readerAndWriter();
-    }
-
-    private void readerAndWriter(){
-        String line = "";
-        do{
-            line = questionScanner.nextLine();
-            System.out.println(line);
-        }while(!line.equals("End Of File"));
-    }
-
-    private void init(){
+    public static void init(final String inputFileName){
         Writer out;
         try {
             out = new FileWriter(inputFileName, true);
