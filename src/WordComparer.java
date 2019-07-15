@@ -27,50 +27,75 @@ public class WordComparer {
             e.printStackTrace();
         }
 
-        TextParse.init(inputFile);
-        TextParse.init(dictionary);
-
         String line = "";
-        while(!line.equals("End Of File")){
+        assert questionScanner != null;
+        while(questionScanner.hasNextLine()){
             line = questionScanner.nextLine();
-            if(!line.equals("End Of File")) {
-                System.out.println(line);
+            System.out.println(line);
 
-                System.out.println();
+            System.out.println();
 
-                String[] parsedLine = inputParser(line);
-                for (String word : parsedLine) {
-                    int lineNumberTemp = TextParse.readerAndWriter(dictionary, word);
-                    if(lineNumberTemp == -1){
-                        System.out.println("Invalid English Word");
+            String[] parsedLine = inputParser(line);
+            for (String word : parsedLine) {
+                int lineNumberTemp = readerAndWriter(dictionary, word);
+                System.out.println(lineNumberTemp);
+                if(lineNumberTemp == -1){
+                    System.out.println("Invalid English Word");
+                }
+                else {
+                    String[] spanishWords = spanishParser(lineNumberTemp);
+                    for(String spanishWord : spanishWords){
+                        System.out.print(spanishWord + ", ");
                     }
-                    else {
-                        String[] spanishWords = spanishParser(lineNumberTemp);
-                        for(String spanishWord : spanishWords){
-                            System.out.print(spanishWord + ", ");
-                        }
-                        System.out.println();
-                    }
+                    System.out.println();
                 }
             }
+
         }
     }
 
-    private String[] spanishParser(int lineNumber){
-        String line = "";
-        int lineNumberTemp = 1;
-        while(!line.equals("End Of File")){
-            line = questionScanner.nextLine();
-            line = line.substring(1);
-            if(!line.equals("End Of File") && lineNumberTemp == lineNumber){
-                return line.split("/");
-            }
-            else{
+    private int readerAndWriter(final String inputFileName, final String compareString){
+        Scanner questionScanner;
+        int lineNumber = 1;
+        try {
+            questionScanner = new Scanner(new File(inputFileName));
+            String line = "";
+            while(questionScanner.hasNextLine()){
+                line = questionScanner.nextLine();
+                String[] newLine = line.split(",");
+                //System.out.println(line + " at line " + lineNumber);
+                if(newLine[0].equals(compareString)){
+                    return lineNumber;
+                }
                 ++lineNumber;
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        String[] error = {"broken", "don't trigger"};
-        return error;
+        return -1;
+    }
+
+    private String[] spanishParser(int lineNumber){
+        String[] line;
+        int lineNumberTemp = 1;
+        while(questionScanner2.hasNextLine()){
+            line = questionScanner2.nextLine().split(",");
+            if(line.length < 2){
+                System.out.println("No spanish word found");
+                return new String[]{"No translation found"};
+            }
+            else {
+                String spanish = line[1];
+                if (lineNumberTemp < lineNumber) {
+                    System.out.println(lineNumber + " , " + lineNumberTemp);
+                    ++lineNumberTemp;
+                } else {
+                    System.out.println("Works");
+                    return spanish.split("/");
+                }
+            }
+        }
+        return new String[]{"broken", "don't trigger"};
     }
 
     private String[] inputParser(String line){
