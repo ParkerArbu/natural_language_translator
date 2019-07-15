@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Created by https://www.gitignore.io/api/jetbrains
 
 ### JetBrains ###
@@ -64,3 +65,6 @@ fabric.properties
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/jetbrains
+=======
+/.metadata/
+>>>>>>> e16739981ac86b969ae1981d18d0ead7d7a51838
