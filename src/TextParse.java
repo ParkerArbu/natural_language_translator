@@ -15,8 +15,9 @@ public class TextParse {
             String line = "";
             while(!line.equals("End Of File")){
                 line = questionScanner.nextLine();
+                String[] newLine = line.split(",");
                 //System.out.println(line + " at line " + lineNumber);
-                if(line.equals(compareString)){
+                if(newLine[0].equals(compareString)){
                     return lineNumber;
                 }
                 ++lineNumber;
