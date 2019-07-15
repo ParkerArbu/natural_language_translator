@@ -56,6 +56,7 @@ public class WordComparer {
         int lineNumberTemp = 1;
         while(!line.equals("End Of File")){
             line = questionScanner.nextLine();
+            line = line.substring(1);
             if(!line.equals("End Of File") && lineNumberTemp == lineNumber){
                 return line.split("/");
             }
