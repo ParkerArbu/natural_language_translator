@@ -7,20 +7,24 @@ import java.util.Scanner;
 
 public class TextParse {
 
-    public static void readerAndWriter(final String inputFileName, final String compareString){
+    public static int readerAndWriter(final String inputFileName, final String compareString){
         Scanner questionScanner;
         int lineNumber = 1;
         try {
             questionScanner = new Scanner(new File(inputFileName));
             String line = "";
-            do{
+            while(!line.equals("End Of File")){
                 line = questionScanner.nextLine();
-                System.out.println(line + " at line " + lineNumber);
+                //System.out.println(line + " at line " + lineNumber);
+                if(line.equals(compareString)){
+                    return lineNumber;
+                }
                 ++lineNumber;
-            }while(!line.equals("End Of File"));
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     public static void init(final String inputFileName){
